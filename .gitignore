@@ -1,3 +1,21 @@
+# API keys and secrets
+.env
+
+# Dependency directory
+node_modules
+
+# Ignore built ts files
+dist
+build
+
+coverage
+
+.DS_Store
+
+*.DS_Store
+
+###################################################
+
 # Logs
 logs
 *.log
