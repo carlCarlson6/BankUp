@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import express, { Express } from 'express';
 import cors from 'cors';
 import { BaseRouter } from './BaseRouter';
-import { Container } from 'inversify';
 
 export class ExpressApiServer {
     private app: Express;
