@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankUp.Backend", "BankUp.Backend\BankUp.Backend.csproj", "{05B55287-040B-4773-B4CA-51067B145949}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankUp.Backend.Test", "..\test\BankUp.Backend.Test\BankUp.Backend.Test.csproj", "{86540535-BFAF-43EA-9568-36D986F0838D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{669119FA-0626-4524-BA60-DE2E692A3AF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monads", "Monads\Monads.csproj", "{A6202B18-DC1C-4DA1-AA96-78E702EAA999}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05B55287-040B-4773-B4CA-51067B145949}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05B55287-040B-4773-B4CA-51067B145949}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05B55287-040B-4773-B4CA-51067B145949}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05B55287-040B-4773-B4CA-51067B145949}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86540535-BFAF-43EA-9568-36D986F0838D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86540535-BFAF-43EA-9568-36D986F0838D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86540535-BFAF-43EA-9568-36D986F0838D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86540535-BFAF-43EA-9568-36D986F0838D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6202B18-DC1C-4DA1-AA96-78E702EAA999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6202B18-DC1C-4DA1-AA96-78E702EAA999}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6202B18-DC1C-4DA1-AA96-78E702EAA999}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6202B18-DC1C-4DA1-AA96-78E702EAA999}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A6202B18-DC1C-4DA1-AA96-78E702EAA999} = {669119FA-0626-4524-BA60-DE2E692A3AF5}
+	EndGlobalSection
+EndGlobal
