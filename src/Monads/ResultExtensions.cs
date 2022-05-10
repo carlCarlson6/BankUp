@@ -8,7 +8,16 @@ public static class ResultExtensions
         OkResult<T> okResult => Result<TOut>.Ok(mapper(okResult.Value)),
         _ => throw new ArgumentOutOfRangeException(nameof(result))
     };
-    
+
+    public static Task<Result<TOut>> Map<T, TOut>(this Result<T> result, Func<T, Task<TOut>> mapper) => result switch
+    {
+        KoResult<T> koResult => Task.FromResult(Result<TOut>.Ko(koResult.Error)),
+        OkResult<T> okResult => ExecuteAsyncMap(okResult, mapper),
+        _ => throw new ArgumentOutOfRangeException(nameof(result))
+    };
+
+    private static async Task<Result<TOut>> ExecuteAsyncMap<T, TOut>(OkResult<T> okResult, Func<T, Task<TOut>> mapper) => Result<TOut>.Ok(await mapper(okResult.Value));
+
     public static TOut Map<T, TOut>(this Result<T> result, Func<T, TOut> onOkResult, Func<Error, TOut> onKoResult) => result switch
     {
         KoResult<T> koResult => onKoResult(koResult.Error),

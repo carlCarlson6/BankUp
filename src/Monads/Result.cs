@@ -25,8 +25,11 @@ internal sealed class KoResult<T> : Result<T>
 
 public class Error : Exception
 {
-    public Error() {}
-    public Error(string message) : base(message) {}
+    public Error() { }
+    public Error(string message) : base(message) { }
+    public Error(string message, Exception exception): base(message, exception) { }
+
+    public override string ToString() => Message;
 }
 
 internal class NotFoundError : Error 
