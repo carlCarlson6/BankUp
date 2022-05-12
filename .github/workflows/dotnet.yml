@@ -15,10 +15,10 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: backend
+      working-directory: src
     - name: Build
       run: dotnet build --no-restore --verbosity q
-      working-directory: backend
+      working-directory: src
     - name: Test
       run: dotnet test --no-build --verbosity normal
-      working-directory: backend
+      working-directory: src
