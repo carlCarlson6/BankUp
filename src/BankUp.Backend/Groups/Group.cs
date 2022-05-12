@@ -1,25 +1,24 @@
 using System.Text.Json.Serialization;
+using Monads;
 
 namespace BankUp.Backend.Groups;
 
-public class Group
+public record Group
 {
     public Guid Id { get; }
-    public IEnumerable<IEvent> Events { get; }
+    public List<IEvent> Events { get; private init; }
 
     [JsonConstructor] 
-    public Group(Guid id, IEnumerable<IEvent> events) => (Id, Events) = (id, events);
+    public Group(Guid id, List<IEvent> events) => (Id, Events) = (id, events);
+
+    public Group(List<IEvent> events) => (Id, Events) = (
+        ((GroupCreated)events.FirstOrDefault(@event => @event is GroupCreated)!).GroupId, events);
+    
     public Group(GroupCreated groupCreated) => (Id, Events) = (groupCreated.GroupId, new List<IEvent>{ groupCreated });
-}
 
-public class GroupModel
-{
-    public string Id { get; set; }
-    public IEnumerable<IEvent> Events { get; set; }
+    public Group Add(IEvent @event) => this with { Events = Events.Append(@event).ToList() };
 
-    public static GroupModel FromDomain(Group group) => new()
-    {
-        Id = group.Id.ToString(),
-        Events = group.Events
-    };
+    public Result<Group> IsUserAMember(Guid userId) => Events.GetMembers().Contains(userId)
+        ? Result<Group>.Ok(this)
+        : Result<Group>.Ko(new Unauthorized());
 }

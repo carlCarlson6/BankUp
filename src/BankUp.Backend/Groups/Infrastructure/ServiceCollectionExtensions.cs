@@ -1,3 +1,4 @@
+using BankUp.Backend.Groups.Infrastructure.MongoDb;
 using MongoDB.Driver;
 
 namespace BankUp.Backend.Groups.Infrastructure;
@@ -9,5 +10,5 @@ public static class ServiceCollectionExtensions
     
     public static IServiceCollection AddGroupsCollection(this IServiceCollection services, IMongoDatabase mongoDatabase) => 
         services
-            .AddSingleton(mongoDatabase.GetCollection<GroupModel>("groups"));
+            .AddSingleton(mongoDatabase.GetCollection<GroupDocument>("groups"));
 }
