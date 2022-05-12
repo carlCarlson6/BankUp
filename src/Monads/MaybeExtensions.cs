@@ -15,7 +15,7 @@ public static class MaybeExtensions
         Some<T> some => onSome(some.Value),
         _ => throw new ArgumentOutOfRangeException(nameof(maybe))
     };
-
+    
     public static Maybe<T> UnWrap<T>(this Maybe<Maybe<T>> maybeMaybe) => maybeMaybe switch
     {
         None<Maybe<T>> => new Maybe<T>(),
@@ -23,12 +23,8 @@ public static class MaybeExtensions
         _ => throw new ArgumentOutOfRangeException(nameof(maybeMaybe))
     };
 
-    public static Result<T> ToResult<T>(this Maybe<T> maybe) => maybe switch
-    {
-        None<T> _ => Result<T>.Ko(new NotFoundError(typeof(T))),
-        Some<T> some => Result<T>.Ok(some.Value),
-        _ => throw new ArgumentOutOfRangeException(nameof(maybe))
-    };
+    public static Result<T> ToResult<T>(this Maybe<T> maybe) =>
+        maybe.Map(Result<T>.Ok, () => Result<T>.Ko(new NotFoundError(typeof(T))));
     
     public static Maybe<T> Find<T>(this IEnumerable<T> sourceList, Func<T, bool> predicate)
     {

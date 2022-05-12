@@ -32,7 +32,7 @@ public class Error : Exception
     public override string ToString() => Message;
 }
 
-internal class NotFoundError : Error 
+public class NotFoundError : Error 
 {
     public NotFoundError(Type type) : base($"element {type.FullName} not found") { }
 }

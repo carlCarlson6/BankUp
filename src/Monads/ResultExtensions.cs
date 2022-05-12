@@ -15,7 +15,7 @@ public static class ResultExtensions
         OkResult<T> okResult => ExecuteAsyncMap(okResult, mapper),
         _ => throw new ArgumentOutOfRangeException(nameof(result))
     };
-
+    
     private static async Task<Result<TOut>> ExecuteAsyncMap<T, TOut>(OkResult<T> okResult, Func<T, Task<TOut>> mapper) => Result<TOut>.Ok(await mapper(okResult.Value));
 
     public static TOut Map<T, TOut>(this Result<T> result, Func<T, TOut> onOkResult, Func<Error, TOut> onKoResult) => result switch
