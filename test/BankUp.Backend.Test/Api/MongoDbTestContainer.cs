@@ -18,7 +18,7 @@ public class MongoDbTestContainerConfiguration : TestcontainerDatabaseConfigurat
     public const string MongoDbImage = "mongo:5.0.6";
     public const int MongoDbPort = 27017;
     
-    public MongoDbTestContainerConfiguration(string image, int port) : base(image, MongoDbPort) { }
+    public MongoDbTestContainerConfiguration() : base(MongoDbImage, MongoDbPort, 88) { }
     
     public override string Database
     {

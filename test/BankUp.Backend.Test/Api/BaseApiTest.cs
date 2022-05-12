@@ -14,13 +14,12 @@ namespace BankUp.Backend.Test.Api;
 
 public class BaseApiTest : IAsyncLifetime
 {
-    private readonly MongoDbTestContainerConfiguration _mongoDbConfig = 
-        new(MongoDbTestContainerConfiguration.MongoDbImage, MongoDbTestContainerConfiguration.MongoDbPort)
-        {
-            Database = "BankUpDb",
-            Username = "BankUpDb_admin",
-            Password = "BankUpDb_pw"
-        };
+    private readonly MongoDbTestContainerConfiguration _mongoDbConfig = new()
+    {
+        Database = "BankUpDb",
+        Username = "BankUpDb_admin",
+        Password = "BankUpDb_pw"
+    };
 
     private readonly MongoDbTestContainer _mongoContainer;
 
@@ -29,6 +28,8 @@ public class BaseApiTest : IAsyncLifetime
             .WithDatabase(_mongoDbConfig)
             .Build();
 
+    internal string MongoDbConnectionString => _mongoContainer.ConnectionString;
+
     protected IWebHost GivenTestHost() =>
         WebHost
             .CreateDefaultBuilder()
@@ -36,7 +37,7 @@ public class BaseApiTest : IAsyncLifetime
             .UseEnvironment(HostEnvironmentExtensions.ApiTestsEnvironmentName)
             .UseTestServer()
             .ConfigureAppConfiguration((_, builder) => builder
-                .AddMongoDbConfiguration(new MongoDbConfiguration { DatabaseName = _mongoDbConfig.Database, ConnectionString = _mongoContainer.ConnectionString })
+                .AddMongoDbTestConfiguration(_mongoDbConfig, _mongoContainer)
                 .AddEnvironmentVariables())
             .ConfigureTestServices(services => services.AddFakeAuthenticationHandler())
             .UseDefaultServiceProvider((_, options) =>
@@ -54,8 +55,13 @@ public class BaseApiTest : IAsyncLifetime
 
 public static class ConfigurationBuilderExtensions
 {
-    public static IConfigurationBuilder AddMongoDbConfiguration(this IConfigurationBuilder builder, MongoDbConfiguration mongoDbConfiguration)
+    public static IConfigurationBuilder AddMongoDbTestConfiguration(this IConfigurationBuilder builder, MongoDbTestContainerConfiguration testContainerConfiguration, MongoDbTestContainer mongoDbTestContainer)
     {
+        var mongoDbConfiguration = new MongoDbConfiguration
+        {
+            DatabaseName = testContainerConfiguration.Database, 
+            ConnectionString = mongoDbTestContainer.ConnectionString
+        };   
         var byteArray = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(mongoDbConfiguration));
         var stream = new MemoryStream(byteArray);
         return builder.AddJsonStream(stream);
