@@ -17,7 +17,7 @@ public class GroupBuilder
         return this;
     }
     
-    public async Task<Group> Build(string connectionString)
+    public async Task<Group> Build(string connectionString) // TODO refactor - pass collection instead
     {
         var collection = new MongoClient(connectionString)
             .GetDatabase("BankUpDb")
