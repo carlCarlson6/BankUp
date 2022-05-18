@@ -2,6 +2,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using BankUp.Backend.Groups;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -29,12 +30,13 @@ public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions
         };
     }
 
-    private Task<AuthenticateResult> OnFoundUser(User user)
+    private static Task<AuthenticateResult> OnFoundUser(User user)
     {
         var claims = new[]
         {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Name, user.Name),
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+            new Claim(ClaimTypes.Email, user.Email),
         };
         var identity = new ClaimsIdentity(claims, "Bearer");
         

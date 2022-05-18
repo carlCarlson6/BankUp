@@ -1,12 +1,8 @@
-using System.Security.Claims;
-using FastEndpoints;
+using BankUp.Backend.Groups.Infrastructure;
 
 namespace BankUp.Backend.Groups.CreateGroup;
 
-public class Request
+public class Request : RequestWithAuthUser
 {
     public string GroupName { get; set; }
-    
-    [FromClaim(ClaimTypes.NameIdentifier)]
-    public Guid Creator { get; set; }
 }

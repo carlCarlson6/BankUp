@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+using BankUp.Backend.Groups.CreateGroup;
 using Monads;
 
 namespace BankUp.Backend.Groups;
@@ -7,8 +7,7 @@ public record Group
 {
     public Guid Id { get; }
     public List<IEvent> Events { get; private init; }
-
-    [JsonConstructor] 
+    
     public Group(Guid id, List<IEvent> events) => (Id, Events) = (id, events);
 
     public Group(List<IEvent> events) => (Id, Events) = (
@@ -18,7 +17,7 @@ public record Group
 
     public Group Add(IEvent @event) => this with { Events = Events.Append(@event).ToList() };
 
-    public Result<Group> IsUserAMember(Guid userId) => Events.GetMembers().Contains(userId)
+    public Result<Group> IsUserAMember(User user) => Events.GetMembers().Contains(user)
         ? Result<Group>.Ok(this)
         : Result<Group>.Ko(new Unauthorized());
 }

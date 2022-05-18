@@ -18,14 +18,4 @@
       <ProjectReference Include="..\Monads\Monads.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Groups\Members\AcceptInvitation" />
-      <Folder Include="Groups\Members\LeaveGroup" />
-      <Folder Include="Groups\Members\SendInvitation" />
-      <Folder Include="Groups\Transactions\AddTransaction" />
-      <Folder Include="Groups\Transactions\DeleteTransaction" />
-      <Folder Include="Groups\Transactions\ReadTransactions" />
-      <Folder Include="Groups\Transactions\UpdateTransaction" />
-    </ItemGroup>
-
 </Project>

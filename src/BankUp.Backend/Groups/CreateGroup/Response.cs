@@ -1,5 +1,3 @@
-using Monads;
-
 namespace BankUp.Backend.Groups.CreateGroup;
 
 public class Response { }

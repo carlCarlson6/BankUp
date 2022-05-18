@@ -1,4 +1,5 @@
 using System.Net.Http;
+using BankUp.Backend.Groups;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;

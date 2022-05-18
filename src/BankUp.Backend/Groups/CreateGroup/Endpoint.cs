@@ -1,3 +1,4 @@
+using BankUp.Backend.Groups.Infrastructure;
 using BankUp.Backend.Infrastructure;
 using FastEndpoints;
 using Monads;
@@ -14,7 +15,7 @@ public class Endpoint : Endpoint<Request, Response>
     public override async Task HandleAsync(Request request, CancellationToken cancellationToken)
     {
         var createEventResult = (await GroupCreated
-            .Create(request.GroupName, new List<Guid> { request.Creator })
+            .Create(request.GroupName, new List<User> { request.GetUser() })
             .Map(@event => _groupRepository.Store(new Group(@event))))
             .UnWrap();
         await HandleResult(createEventResult);

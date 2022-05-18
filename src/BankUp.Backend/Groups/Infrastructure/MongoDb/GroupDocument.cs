@@ -1,3 +1,5 @@
+using BankUp.Backend.Groups.CreateGroup;
+using BankUp.Backend.Groups.RenameGroup;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
@@ -7,7 +9,6 @@ namespace BankUp.Backend.Groups.Infrastructure.MongoDb;
 
 public class GroupDocument
 {
-
     [BsonId]
     [BsonRepresentation(BsonType.String)]
     public string Id { get; set; } = new Guid().ToString();
@@ -17,7 +18,7 @@ public class GroupDocument
 
 public class EventDocument
 {
-    public string EventType { get; set; }
+    public string EventType { get; set; } // TODO - move as new class EventDocumentMetadata
     public string Payload { get; set; }
 }
 
@@ -41,6 +42,7 @@ public static class DocumentExtensions
     {
         nameof(GroupCreated) => JsonSerializer.Deserialize<GroupCreated>(eventDocument.Payload),
         nameof(GroupRenamed) => JsonSerializer.Deserialize<GroupRenamed>(eventDocument.Payload),
-        _ => new Unknown(eventDocument.EventType, eventDocument.Payload)
+        // TODO - add rest of events
+        _ => new UnknownEvent(eventDocument.EventType, eventDocument.Payload)
     })!;
 }

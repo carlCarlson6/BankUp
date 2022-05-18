@@ -1,7 +1,9 @@
+using BankUp.Backend.Groups.Infrastructure;
 using BankUp.Backend.Infrastructure;
 using FastEndpoints;
 using Monads;
 
+// ReSharper disable once UnusedType.Global
 namespace BankUp.Backend.Groups.GetResume;
 
 [HttpGet($"{ApiUris.Groups}/{{GroupId}}")]
@@ -13,11 +15,11 @@ public class Endpoint : Endpoint<Request, Response>
     public override async Task HandleAsync(Request request, CancellationToken cancellationToken)
     {
         var maybeGroup = await _groupRepository.Read(request.GroupId);
-        var resultView = maybeGroup.ToResult()
-            .Map(group => group.IsUserAMember(request.UserId))
+        await maybeGroup.ToResult()
+            .Map(group => GroupResumeView.BuildView(group.Events))
+            .Map(view => view.IsUserAMember(request.GetUser()))
             .UnWrap()
-            .Map(group => GroupResumeView.BuildView(group.Events));
-        await HandleResult(resultView);
+            .Map(HandleResult);
     }
     
     private Task HandleResult(Result<GroupResumeView> result) => result.Map(OnOkResult, OnKoResult);
