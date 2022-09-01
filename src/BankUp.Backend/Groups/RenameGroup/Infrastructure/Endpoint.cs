@@ -4,7 +4,7 @@ using FastEndpoints;
 using Monads;
 
 // ReSharper disable once UnusedType.Global
-namespace BankUp.Backend.Groups.RenameGroup;
+namespace BankUp.Backend.Groups.RenameGroup.Infrastructure;
 
 [HttpPut($"{ApiUris.Groups}/{{GroupId}}/rename")]
 public class Endpoint : Endpoint<Request, Response>
@@ -24,7 +24,7 @@ public class Endpoint : Endpoint<Request, Response>
         await HandleResult(storeResult);
     }
 
-    private Task HandleResult(Result<Group> result) => result.Map(OnOkResult, OnKoResult);
+    private Task HandleResult(Operation<Group> result) => result.Map(OnOkResult, OnKoResult);
     private Task OnOkResult(Group group) => SendOkAsync(new OkResponse{ Group = GroupResumeView.BuildView(group.Events) });
-    private Task OnKoResult(Error error) => SendAsync(new KoResponse { Error = error.ToString() }, 500);
+    private Task OnKoResult(OperationError error) => SendAsync(new KoResponse { Error = error.ToString() }, 500);
 }

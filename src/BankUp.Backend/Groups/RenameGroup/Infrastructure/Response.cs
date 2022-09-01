@@ -1,4 +1,4 @@
-namespace BankUp.Backend.Groups.RenameGroup;
+namespace BankUp.Backend.Groups.RenameGroup.Infrastructure;
 
 public class Response { }
 

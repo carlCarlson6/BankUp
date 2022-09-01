@@ -20,12 +20,12 @@ public class UnknownEvent : IEvent
 
 public static class EventExtensions
 {
-    public static IEnumerable<User> GetMembers(this IEnumerable<IEvent> events) => 
-        events.Aggregate(new List<User>(), GetMembers);
+    public static IEnumerable<User> GetOwners(this IEnumerable<IEvent> events) => 
+        events.Aggregate(new List<User>(), GetOwners);
 
-    private static List<User> GetMembers(List<User> members, IEvent @event) => @event switch
+    private static List<User> GetOwners(List<User> owners, IEvent @event) => @event switch
     {
-        GroupCreated groupCreated => members.Concat(groupCreated.Members).ToList(),
-        _ => members
+        GroupCreated groupCreated => owners.Concat(groupCreated.Owners).ToList(),
+        _ => owners
     };
 }

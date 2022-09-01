@@ -1,7 +1,7 @@
 using BankUp.Backend.Groups.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BankUp.Backend.Groups.RenameGroup;
+namespace BankUp.Backend.Groups.RenameGroup.Infrastructure;
 
 public class Request : RequestWithAuthUser
 {

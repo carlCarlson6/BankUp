@@ -17,7 +17,7 @@ public record Group
 
     public Group Add(IEvent @event) => this with { Events = Events.Append(@event).ToList() };
 
-    public Result<Group> IsUserAMember(User user) => Events.GetMembers().Contains(user)
-        ? Result<Group>.Ok(this)
-        : Result<Group>.Ko(new Unauthorized());
+    public Operation<Group> IsUserAMember(User user) => Events.GetOwners().Contains(user)
+        ? Operation<Group>.Ok(this)
+        : Operation<Group>.Ko(new Unauthorized());
 }

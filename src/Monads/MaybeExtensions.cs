@@ -23,8 +23,8 @@ public static class MaybeExtensions
         _ => throw new ArgumentOutOfRangeException(nameof(maybeMaybe))
     };
 
-    public static Result<T> ToResult<T>(this Maybe<T> maybe) =>
-        maybe.Map(Result<T>.Ok, () => Result<T>.Ko(new NotFoundError(typeof(T))));
+    public static Operation<T> ToResult<T>(this Maybe<T> maybe) =>
+        maybe.Map(Operation<T>.Ok, () => Operation<T>.Ko(new NotFoundOperationError(typeof(T))));
     
     public static Maybe<T> Find<T>(this IEnumerable<T> sourceList, Func<T, bool> predicate)
     {

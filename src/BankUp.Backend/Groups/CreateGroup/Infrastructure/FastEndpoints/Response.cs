@@ -1,4 +1,4 @@
-namespace BankUp.Backend.Groups.CreateGroup;
+namespace BankUp.Backend.Groups.CreateGroup.Infrastructure.FastEndpoints;
 
 public class Response { }
 

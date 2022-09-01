@@ -1,20 +1,14 @@
-using BankUp.Backend.Groups.CreateGroup;
+using BankUp.Backend.Groups.CreateGroup.Errors;
+using BankUp.Backend.Groups.Errors;
 using Monads;
-using Newtonsoft.Json;
+using static System.String;
 
 namespace BankUp.Backend.Groups.RenameGroup;
 
-public class GroupRenamed : IEvent
+public record GroupRenamed(Guid Id, string Name, DateTime CreatedAt) : IEvent
 {
-    public Guid Id { get; }
-    public string Name { get; }
-    public DateTime CreatedAt { get; }
-
-    [JsonConstructor]
-    public GroupRenamed(Guid id, string name, DateTime createdAt) => (Id, Name, CreatedAt) = (id, name, createdAt);
-    
-    public static Result<GroupRenamed> Create(string name) =>
-        String.IsNullOrWhiteSpace(name)
-            ? Result<GroupRenamed>.Ko(new InvalidGroupCreation()) // TODO - create proper error
-            : Result<GroupRenamed>.Ok(new GroupRenamed(Guid.NewGuid(), name, DateTime.UtcNow));
+    public static Operation<GroupRenamed> Create(string name) =>
+        IsNullOrWhiteSpace(name)
+            ? Operation<GroupRenamed>.Ko(new InvalidGroupCreation(new EmptyGroupName()))
+            : Operation<GroupRenamed>.Ok(new GroupRenamed(Guid.NewGuid(), name, DateTime.UtcNow));
 }

@@ -7,8 +7,8 @@ using BankUp.Backend.Groups.CreateGroup;
 using BankUp.Backend.Infrastructure;
 using FluentAssertions;
 using Xunit;
-using OkResponse = BankUp.Backend.Groups.RenameGroup.OkResponse;
-using Request = BankUp.Backend.Groups.RenameGroup.Request;
+using OkResponse = BankUp.Backend.Groups.RenameGroup.Infrastructure.OkResponse;
+using Request = BankUp.Backend.Groups.RenameGroup.Infrastructure.Request;
 
 namespace BankUp.Backend.Test.Api.Groups;
 
@@ -22,6 +22,7 @@ public class RenameGroupTests : BaseApiTest
                 Guid.NewGuid(), 
                 Guid.NewGuid(), 
                 "this is an old name", 
+                new List<Member> { new Member(Guid.NewGuid(), "memeber1") },
                 new List<User> { TestUsers.TestUser1 }, 
                 DateTime.UtcNow))
             .Build(MongoDbConnectionString);

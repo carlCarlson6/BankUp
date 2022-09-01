@@ -23,6 +23,7 @@ public class GetResumeTests : BaseApiTest
                     Guid.NewGuid(),
                     Guid.NewGuid(),
                     "this is an old name",
+                    new List<Member> { new Member(Guid.NewGuid(), "memeber1") },
                     new List<User> { TestUsers.TestUser1 },
                     DateTime.UtcNow),
                 new GroupRenamed(

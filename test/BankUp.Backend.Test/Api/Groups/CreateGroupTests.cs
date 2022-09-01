@@ -1,6 +1,8 @@
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using BankUp.Backend.Groups.CreateGroup;
+using BankUp.Backend.Groups.CreateGroup.Infrastructure;
+using BankUp.Backend.Groups.CreateGroup.Infrastructure.FastEndpoints;
 using BankUp.Backend.Infrastructure;
 using FluentAssertions;
 using Xunit;

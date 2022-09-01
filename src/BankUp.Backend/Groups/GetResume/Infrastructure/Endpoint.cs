@@ -4,7 +4,7 @@ using FastEndpoints;
 using Monads;
 
 // ReSharper disable once UnusedType.Global
-namespace BankUp.Backend.Groups.GetResume;
+namespace BankUp.Backend.Groups.GetResume.Infrastructure;
 
 [HttpGet($"{ApiUris.Groups}/{{GroupId}}")]
 public class Endpoint : Endpoint<Request, Response>
@@ -16,13 +16,13 @@ public class Endpoint : Endpoint<Request, Response>
     {
         var maybeGroup = await _groupRepository.Read(request.GroupId);
         await maybeGroup.ToResult()
-            .Map(group => GroupResumeView.BuildView(group.Events))
-            .Map(view => view.IsUserAMember(request.GetUser()))
+            .Map(group => group.IsUserAMember(request.GetUser()))
             .UnWrap()
+            .Map(group => GroupResumeView.BuildView(group.Events))
             .Map(HandleResult);
     }
     
-    private Task HandleResult(Result<GroupResumeView> result) => result.Map(OnOkResult, OnKoResult);
+    private Task HandleResult(Operation<GroupResumeView> result) => result.Map(OnOkResult, OnKoResult);
     private Task OnOkResult(GroupResumeView view) => SendOkAsync(new OkResponse{ Group = view });
-    private Task OnKoResult(Error error) => SendAsync(new KoResponse { Error = error.ToString() }, 500);
+    private Task OnKoResult(OperationError error) => SendAsync(new KoResponse { Error = error.ToString() }, 500);
 }
