@@ -2,6 +2,7 @@ using BankUp.Backend.Groups.Infrastructure;
 using BankUp.Backend.Infrastructure;
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using MediatR;
 
 namespace BankUp.Backend;
 
@@ -20,6 +21,7 @@ public class Startup
     {
         services
             .AddMongoDb(_configuration)
+            .AddMediatR(typeof(Startup))
             .AddGroupsServices()
             .AddFastEndpoints()
             .AddSwaggerDoc();

@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BankUp.Backend.Infrastructure;
 using DotNet.Testcontainers.Containers.Builders;
+using MediatR;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -39,7 +40,9 @@ public class BaseApiTest : IAsyncLifetime
             .ConfigureAppConfiguration((_, builder) => builder
                 .AddMongoDbTestConfiguration(_mongoDbConfig, _mongoContainer)
                 .AddEnvironmentVariables())
-            .ConfigureTestServices(services => services.AddFakeAuthenticationHandler())
+            .ConfigureTestServices(services => services
+                .AddMediatR(typeof(Startup))
+                .AddFakeAuthenticationHandler())
             .UseDefaultServiceProvider((_, options) =>
             {
                 // makes sure DI lifetimes and scopes don't have common issues

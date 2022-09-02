@@ -9,7 +9,6 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddGroupsServices(this IServiceCollection services) => services
         .AddSingleton<IGroupRepository, GroupMongoRepository>()
-        .AddMediatR(typeof(Startup))
         .AddUseCases();
 
     private static IServiceCollection AddUseCases(this IServiceCollection services) => services

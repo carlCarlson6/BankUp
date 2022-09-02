@@ -1,7 +1,6 @@
+using System.Collections.Generic;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using BankUp.Backend.Groups.CreateGroup;
-using BankUp.Backend.Groups.CreateGroup.Infrastructure;
 using BankUp.Backend.Groups.CreateGroup.Infrastructure.FastEndpoints;
 using BankUp.Backend.Infrastructure;
 using FluentAssertions;
@@ -16,7 +15,11 @@ public class CreateGroupTest : BaseApiTest
     {
         var httpResponse = await GivenTestHost()
             .GetTestClient(TestUsers.TestUser1)
-            .PutAsJsonAsync(ApiUris.Groups, new Request { GroupName = "test-group-name"});
+            .PutAsJsonAsync(ApiUris.Groups, new Request
+            {
+                GroupName = "test-group-name",
+                Members = new List<string> { TestUsers.TestUser1.Name }
+            });
 
         httpResponse.IsSuccessStatusCode.Should().BeTrue();
         httpResponse.StatusCode.ToString().Should().Be("Created");
